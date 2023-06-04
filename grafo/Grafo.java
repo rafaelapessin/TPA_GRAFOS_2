@@ -100,7 +100,7 @@ public class Grafo<T>{
 
         Vertice<T> novoVertice = null;
 
-        // Verifica se objeto passado como origem já está no grafo
+        // Verifica se o objeto passado como origem já está no grafo
         for(Vertice<T> vertice: vertices){
             if(vertice.getValor().equals(origem)){
                 novoVertice = vertice;
@@ -124,7 +124,7 @@ public class Grafo<T>{
             ArrayList<T> listaDeDestinos = new ArrayList<T>();
             ArrayList<Float> listaDePesos = new ArrayList<Float>();
 
-            // pega menor aresta do que está ligado dentre todos os vértices do novoGrafo
+            // pega a menor aresta do que está ligado dentre todos os vértices do novoGrafo
             while(tamanhonovoGrafo < tamanhoGrafoAtual){
                 achouAresta = false;
 
@@ -136,10 +136,10 @@ public class Grafo<T>{
                         // Verifica se o vertice de destino já está no grafo
                         // Obtém o destino da aresta
                         T destino = novaAresta.getDestino().getValor();
-                        // Busca desnino no grafo
+                        // Busca destino no grafo
                         Vertice<T> v = novoGrafo.getVertice(destino);
                         
-                        // Caso o vertice que contém o destino já esteja quer dizer que formará ciclo
+                        // Caso o vertice que contém o destino já esteja no grafo, forma um ciclo
                         boolean verticeDeDestinoJaEstaNoGrafoNovo = v != null;
                         // E se isso for acontecer esse vértice é ignorado
                         if(verticeDeDestinoJaEstaNoGrafoNovo) continue;
@@ -157,24 +157,7 @@ public class Grafo<T>{
                             valorDaMenorAresta = valorNovaAresta;
                         }
                     }
-                }
-                // Verificar se forma Ciclo ao adicionar aresta
-                /* IDEIA: como estamos adicionando um destino, quando vamos adicionar uma aresta
-                          pela lógica, caso o vertice já esteja no grafo, quer dizer que ele já é destino de outro vértice,
-                          portanto formará um ciclo
-                          Premissa: Um vértice não pode adicionar um outro vértice - que já esteja no grafo novo - como destino
-                    Por exemplo:
-                        - temos 2 grafos: grafoAtual{1, 2, 3, 4, 5}, grafoNovo{1, 2}
-                        - com a seguinte matriz de adjacência:
-                             0;47;78;65; 0
-                            47; 0;43;81;77
-                            78;43; 0;25;80
-                            65;81;25;0 ;47
-                             0;77;80;47; 0
-                        - pela lógica não é possível adicionar um vertice ao grafo no, caso ele já esteja
-                        - logo caso adicionemos aquela aresta, estermos gerando um ciclo
-                */
-                
+                }              
                 
                 // Adiciona o vértice de destino ao grafo
                 // clone() usado para duplicar as informações             
@@ -233,8 +216,7 @@ public class Grafo<T>{
     public Grafo<T> clone() {
         Grafo<T> cloneGrafo = new Grafo<T>();
         for(Vertice<T> vertice : this.vertices){
-            // Verificar caso do destino da aresta ser diferente do vértice da clone do grafo
-            // Solução: passar pelas arestas alterando o destino da aresta usando getVertice do grafoClone
+            // Passar pelas arestas alterando o destino da aresta usando getVertice do grafoClone
             // Cada vertice tem as arestas que ligam a um outro vértice
             cloneGrafo.adicionarVertice(vertice.clone());
         }
